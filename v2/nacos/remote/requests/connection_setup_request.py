@@ -5,42 +5,42 @@ from v2.nacos.ability.client_abilities import ClientAbilities
 
 
 class ConnectionSetupRequest(request.Request):
-    def __init__(self):
-        super().__init__()
-        self.__client_version = ""
-        self.__client_abilities = None
-        self.__abilities = ClientAbilities()
-        self.__tenant = ""
-        self.__labels = {}
+    def init(self):
+        super().init()
+        self.clientVersion = ""
+        self.clientAbilities = None
+        self.abilities = ClientAbilities()
+        self.tenant = ""
+        self.labels = {}
 
-        self.__MODULE = "internal"
+        self.MODULE = "internal"
 
     def get_client_version(self) -> str:
-        return self.__client_version
+        return self.clientVersion
 
-    def set_client_version(self, client_version: str) -> None:
-        self.__client_version = client_version
+    def set_client_version(self, clientVersion: str) -> None:
+        self.clientVersion = clientVersion
 
     def get_labels(self) -> Dict[str, str]:
-        return self.__labels
+        return self.labels
 
     def set_labels(self, labels: Dict[str, str]) -> None:
-        self.__labels = labels
+        self.labels = labels
 
     def get_tenant(self) -> str:
-        return self.__tenant
+        return self.tenant
 
     def set_tenant(self, tenant: str) -> None:
-        self.__tenant = tenant
+        self.tenant = tenant
 
     def get_abilities(self) -> ClientAbilities:
-        return self.__abilities
+        return self.abilities
 
     def set_abilities(self, abilities: ClientAbilities) -> None:
-        self.__abilities = abilities
+        self.abilities = abilities
 
     def get_module(self):
-        return self.__MODULE
+        return self.MODULE
 
     def get_remote_type(self):
         return remote_request_type["ConnectionSetup"]
