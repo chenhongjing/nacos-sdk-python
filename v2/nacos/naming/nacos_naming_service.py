@@ -30,15 +30,18 @@ class NacosNamingService:
             self.logger, self.namespace, self.service_info_holder, properties, self.change_notifier
         )
 
-    def register_instance(self, service_name: str, group_name: str, instance: Instance) -> None:
+    def register_instance(
+            self, service_name: str, group_name: str, cluster_name: str, ip: str, port: int, weight=1.0, healthy=True,
+            enabled=True, ephemeral=True, metadata=None, instance_id=None):
+        if metadata is None:
+            metadata = {}
+        instance = Instance(instanceId=instance_id, ip=ip, port=port, weight=weight, healthy=healthy, enabled=enabled,
+                            ephemeral=ephemeral, clusterName=cluster_name, serviceName=service_name, metadata=metadata)
         NamingUtils.check_instance_is_legal(instance)
         self.client_proxy.register_service(service_name, group_name, instance)
 
-    # def deregister_instance(self, service_name: str, group_name: str, ip: str, port: int, cluster_name: str) -> None:
-    #     instance = Instance(ip=ip, port=port, cluster_name=cluster_name, service_name=service_name)
-    #     self.client_proxy.deregister_service(service_name, group_name, instance)
-
-    def deregister_instance(self, service_name: str, group_name: str, instance: Instance):
+    def deregister_instance(self, service_name: str, group_name: str, ip: str, port: int, cluster_name: str) -> None:
+        instance = Instance(ip=ip, port=port, cluster_name=cluster_name, service_name=service_name)
         self.client_proxy.deregister_service(service_name, group_name, instance)
 
     def get_all_instances(self, service_name: str, group_name: str, clusters: List[str], subscribe: bool

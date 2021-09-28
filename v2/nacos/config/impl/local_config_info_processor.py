@@ -72,7 +72,6 @@ class LocalConfigInfoProcessor:
                     parent_path, file_name = os.path.split(file_path)
                     if not os.path.exists(parent_path):
                         os.makedirs(parent_path)
-                    os.mknod(file_name)
                     with open(file_path, "w", encoding='utf=8') as f:
                         f.write(config)
             except NacosException as e:
