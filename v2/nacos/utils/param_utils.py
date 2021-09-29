@@ -82,7 +82,7 @@ class ParamUtils:
 
     @staticmethod
     def check_beta_ips(beta_ips: str) -> None:
-        # todo related to InternetAddressUtil.is_ip(ip)
+        # todo
         pass
 
     @staticmethod

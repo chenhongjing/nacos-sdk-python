@@ -4,8 +4,8 @@ import time
 from v2.nacos.config.ilistener import Listener
 from v2.nacos.config.nacos_config_service import NacosConfigService
 
-SERVER_ADDRESSES = "http://mse-96d50180-p.nacos-ans.mse.aliyuncs.com:8848"
-# SERVER_ADDRESSES = "http://127.0.0.1:8848"
+# SERVER_ADDRESSES = "http://mse-96d50180-p.nacos-ans.mse.aliyuncs.com:8848"
+SERVER_ADDRESSES = "http://127.0.0.1:8848"
 NAMESPACE = ""
 DATA_ID1 = "nacos_config_test1"
 DATA_ID2 = "nacos_config_test2"
@@ -70,23 +70,22 @@ if __name__ == '__main__':
     print("add_listener complete")
     time.sleep(1)
 
-    #
-    # # remove listener
-    # config.remove_listener(DATA_ID1, GROUP, demo_listener)
-    # print("remove_listener complete")
-    # time.sleep(1)
-    #
-    # # get config and sign listener
-    # config_content_2 = config.get_config_and_sign_listener(DATA_ID1, GROUP, TIMEOUT, demo_listener)
-    # print("get_config_and_sign_listener:", config_content_2)
-    # time.sleep(1)
-    #
-    # # remove config
-    # remove_config = config.remove_config(DATA_ID1, GROUP)
-    # print("remove_config:", str(remove_config))
-    # time.sleep(1)
-    #
-    # # shutdown
-    # config.shutdown()
+    # remove listener
+    config.remove_listener(DATA_ID1, GROUP, demo_listener)
+    print("remove_listener complete")
+    time.sleep(1)
 
-    # time.sleep(1000)
+    # get config and sign listener
+    config_content_2 = config.get_config_and_sign_listener(DATA_ID1, GROUP, TIMEOUT, demo_listener)
+    print("get_config_and_sign_listener:", config_content_2)
+    time.sleep(1)
+
+    # remove config
+    remove_config = config.remove_config(DATA_ID1, GROUP)
+    print("remove_config:", str(remove_config))
+    time.sleep(1)
+
+    # shutdown
+    time.sleep(5)
+    config.shutdown()
+    print("shutdown")

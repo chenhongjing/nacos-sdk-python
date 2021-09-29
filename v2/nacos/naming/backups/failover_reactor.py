@@ -23,7 +23,6 @@ class FailoverReactor(Closeable):
     FAILOVER_MODE_PARAM = "failover-mode"
 
     DAY_PERIOD_SECONDS = 24 * 60 * 60
-    # DAY_PERIOD_SECONDS = 10 # debug
 
     def __init__(self, logger, service_info_holder, cache_dir):
         self.logger = logger

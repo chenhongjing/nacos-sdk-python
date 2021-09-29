@@ -1,9 +1,6 @@
 import os
 
 from v2.nacos.exception.nacos_exception import NacosException
-# from v2.nacos.utils.arg_util import ArgUtil
-#
-# system_properties = ArgUtil().get_system_properties()
 from v2.nacos.utils.arg_util import arg_parser
 
 system_args_parser = arg_parser.parse_args()
@@ -23,8 +20,6 @@ class LocalConfigInfoProcessor:
     SNAPSHOT_FILE_CHILD_1 = "snapshot"
 
     SNAPSHOT_FILE_CHILD_2 = "snapshot-tenant"
-
-    # USER_HOME = system_properties.get("user.home")
 
     USER_HOME = system_args_parser.user_home
 

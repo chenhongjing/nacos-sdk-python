@@ -5,9 +5,6 @@ from v2.nacos.common.constants import Constants
 from v2.nacos.exception.nacos_exception import NacosException
 from v2.nacos.naming.dtos.instance import Instance
 from v2.nacos.naming.dtos.service_info import ServiceInfo
-# from v2.nacos.utils.arg_util import ArgUtil
-#
-# system_properties = ArgUtil().get_system_properties()
 
 from v2.nacos.utils.arg_util import arg_parser
 

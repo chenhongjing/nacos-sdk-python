@@ -4,8 +4,8 @@ import time
 from v2.nacos.naming.ievent_listener import EventListener
 from v2.nacos.naming.nacos_naming_service import NacosNamingService
 
-# SERVER_ADDRESSES = "http://127.0.0.1:8848"
-SERVER_ADDRESSES = "http://mse-96d50180-p.nacos-ans.mse.aliyuncs.com:8848"
+SERVER_ADDRESSES = "http://127.0.0.1:8848"
+# SERVER_ADDRESSES = "http://mse-96d50180-p.nacos-ans.mse.aliyuncs.com:8848"
 NAMESPACE = "public"
 
 properties = {
@@ -61,8 +61,8 @@ if __name__ == '__main__':
     print("select unhealthy instances:", str(selected_unhealthy_instances))
 
     # select one healthy instance
-    one_healthy_instance = naming.select_one_healthy_instance("nacos.test.2", "default", ["DEFAULT"], True)
-    print("select one healthy instance:", str(one_healthy_instance))
+    # one_healthy_instance = naming.select_one_healthy_instance("nacos.test.2", "default", ["DEFAULT"], True)
+    # print("select one healthy instance:", str(one_healthy_instance))
 
     # get services of server
     list_view = naming.get_services_of_server(0, 1024, "default", None)
@@ -85,6 +85,9 @@ if __name__ == '__main__':
     # deregister instance
     naming.deregister_instance("nacos.test.2", "default", "11.11.11.11", 8888, "DEFAULT")
     time.sleep(1)
+    print("deregister instance!")
 
     # shutdown
-    naming.shutdown()
+    # time.sleep(5)
+    # naming.shutdown()
+    # print("shutdown")

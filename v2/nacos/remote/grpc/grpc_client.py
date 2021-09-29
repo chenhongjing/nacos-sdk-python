@@ -25,6 +25,7 @@ from v2.nacos.remote.utils import ConnectionType, rpc_client_status
 
 class GrpcClient(RpcClient):
     DEFAULT_MAX_INBOUND_MESSAGE_SIZE = 10 * 1024 * 1024
+
     DEFAULT_KEEP_ALIVE_TIME = 6 * 60 * 1000
 
     def get_connection_type(self) -> str:

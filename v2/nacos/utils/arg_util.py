@@ -1,4 +1,3 @@
-import json
 from argparse import ArgumentParser
 
 # todo add more arguments and annotations

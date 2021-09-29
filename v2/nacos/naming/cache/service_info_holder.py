@@ -10,9 +10,6 @@ from v2.nacos.naming.dtos.service_info import ServiceInfo
 from v2.nacos.naming.event.instances_change_event import InstancesChangeEvent
 from v2.nacos.naming.utils.naming_utils import NamingUtils
 from v2.nacos.property_key_constants import PropertyKeyConstants
-# from v2.nacos.utils.arg_util import ArgUtil
-#
-# system_properties = ArgUtil().get_system_properties()
 
 
 from v2.nacos.utils.arg_util import arg_parser
@@ -43,7 +40,6 @@ class ServiceInfoHolder(Closeable):
         self.push_empty_protection = self.__is_push_empty_protect(properties)
 
     def __init_cache_dir(self, namespace, properties):
-        # jm_snapshot_path = system_properties.get(ServiceInfoHolder.JM_SNAPSHOT_PATH_PROPERTY)
         jm_snapshot_path = system_args_parser.JM_SNAPSHOT_PATH
         naming_cache_registry_dir = ""
 
@@ -56,10 +52,6 @@ class ServiceInfoHolder(Closeable):
                                           ServiceInfoHolder.FILE_PATH_NAMING,
                                           namespace)
         else:
-            # self.cache_dir = os.path.join(system_properties.get(ServiceInfoHolder.USER_HOME_PROPERTY),
-            #                               ServiceInfoHolder.FILE_PATH_NACOS + naming_cache_registry_dir,
-            #                               ServiceInfoHolder.FILE_PATH_NAMING,
-            #                               namespace)
             self.cache_dir = os.path.join(system_args_parser.user_home,
                                           ServiceInfoHolder.FILE_PATH_NACOS + naming_cache_registry_dir,
                                           ServiceInfoHolder.FILE_PATH_NAMING,

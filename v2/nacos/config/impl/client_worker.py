@@ -60,7 +60,7 @@ class ClientWorker(Closeable):
         self.agent.start()
 
     def __init_properties(self, properties: dict) -> None:
-        # todo 尚未完善
+        # todo
         self.enable_remote_sync_config = properties.get(PropertyKeyConstants.ENABLE_REMOTE_SYNC_CONFIG)
         if not self.enable_remote_sync_config:
             self.enable_remote_sync_config = False
@@ -86,7 +86,10 @@ class ClientWorker(Closeable):
         group = self.__blank_2_default_group(group)
         tenant = self.agent.get_tenant()
         cache = self.add_cache_data_if_absent(data_id, group, tenant)
-        print("at add_tenant_listener, cache_map:", str(self.cache_map))
+
+        # debug
+        # print("at add_tenant_listener, cache_map:", str(self.cache_map))
+
         with self.lock:
             for listener in listeners:
                 cache.add_listener(listener)
@@ -128,7 +131,8 @@ class ClientWorker(Closeable):
     def remove_cache(self, data_id: str, group: str, tenant: str) -> None:
         group_key = GroupKey.get_key_tenant(data_id, group, tenant)
         with self.lock:
-            print("remove", group_key, "from:", self.cache_map)
+            # debug
+            # print("remove", group_key, "from:", self.cache_map)
             copy = self.cache_map.copy()
             copy.pop(group_key)
             self.cache_map = copy
@@ -248,7 +252,10 @@ class ClientWorker(Closeable):
             need_all_sync = (now - self.last_all_sync_time) >= ClientWorker.ConfigRpcTransportClient.ALL_SYNC_INTERNAL
 
             # categorize cache_data
-            print("at execute_config_listen, cache_map:", self.client_worker.cache_map)
+
+            # debug
+            # print("at execute_config_listen, cache_map:", self.client_worker.cache_map)
+
             for cache in self.client_worker.cache_map.values():
                 with self.lock:
                     if cache.is_sync_with_server():
@@ -549,27 +556,13 @@ class ClientWorker(Closeable):
 
         @staticmethod
         def __get_labels() -> dict:
-            # labels = {
-            #     RemoteConstants.LABEL_SOURCE: RemoteConstants.LABEL_SOURCE_SDK,
-            #     RemoteConstants.LABEL_MODULE: RemoteConstants.LABEL_MODULE_CONFIG,
-            #     Constants.APPNAME: AppNameUtils.get_app_name(),
-            #     Constants.VIPSERVER_TAG: EnvUtil.get_self_vip_server_tag(),
-            #     Constants.AMORY_TAG: EnvUtil.get_self_amory_tag(),
-            #     Constants.LOCATION_TAG: EnvUtil.get_self_location_tag()
-            # }
-            # return labels
-            # todo related utils is uncompleted.
+            # todo
             return {}
 
         def __init_rpc_client_handler(self, rpc_client_inner: RpcClient) -> None:
             rpc_client_inner.register_server_request_handler(ConfigChangeNotifyRequestHandler(
                 self.logger, self.client_worker.cache_map, self.notify_listen_config)
             )
-
-            # todo register ClientConfigMetricRequestHandler Q: necessary ?
-            # rpc_client_inner.register_server_request_handler(
-            #     ClientConfigMetricRequestHandler(self.get_metrics)
-            # )
 
             rpc_client_inner.register_connection_listener(
                 ConfigRpcConnectionEventListener(self.logger, rpc_client_inner, self.client_worker.cache_map,
