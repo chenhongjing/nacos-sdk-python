@@ -33,6 +33,11 @@ class DemoListener(EventListener):
         print("on listening...")
 
 
+class DemoListener2(EventListener):
+    def on_event(self, event) -> None:
+        print("on listening2...")
+
+
 if __name__ == '__main__':
     naming = NacosNamingService(logger, properties)
 
@@ -43,26 +48,22 @@ if __name__ == '__main__':
     )
     time.sleep(1)
 
-    naming .register_instance(
-        service_name="nacos.test.2", group_name="default", cluster_name="DEFAULT", ip="11.11.11.11", port=8880,
-        weight=1.5, healthy=False, metadata=instance_meta
-    )
-    time.sleep(1)
+    # naming .register_instance(
+    #     service_name="nacos.test.2", group_name="default", cluster_name="DEFAULT", ip="11.11.11.11", port=8880,
+    #     weight=1.5, healthy=False, metadata=instance_meta
+    # )
+    # time.sleep(1)
 
     # get all instances
     all_instances = naming.get_all_instances("nacos.test.2", "default", ["DEFAULT"], True)
     print(all_instances)
 
     # select instances
-    selected_healthy_instances = naming.select_instances("nacos.test.2", "default", ["DEFAULT"], True, True)
+    selected_healthy_instances = naming.select_instances("nacos.test.2", "default", [], True, True)
     print("select healhty instances:", str(selected_healthy_instances))
 
-    selected_unhealthy_instances = naming.select_instances("nacos.test.3", "default", ["DEFAULT"], False, True)
+    selected_unhealthy_instances = naming.select_instances("nacos.test.2", "default", [], False, True)
     print("select unhealthy instances:", str(selected_unhealthy_instances))
-
-    # select one healthy instance
-    # one_healthy_instance = naming.select_one_healthy_instance("nacos.test.2", "default", ["DEFAULT"], True)
-    # print("select one healthy instance:", str(one_healthy_instance))
 
     # get services of server
     list_view = naming.get_services_of_server(0, 1024, "default", None)
@@ -71,7 +72,12 @@ if __name__ == '__main__':
     # subscribe
     demo_listener = DemoListener()
     naming.subscribe("nacos.test.2", "default", [], demo_listener)
+    print("subscribed!")
     time.sleep(1)
+
+    # select one healthy instance
+    one_healthy_instance = naming.select_one_healthy_instance("nacos.test.2", "default", [], True)
+    print("select one healthy instance:", str(one_healthy_instance))
 
     # get server status
     server_status = naming.get_server_status()
@@ -81,13 +87,13 @@ if __name__ == '__main__':
     naming.unsubscribe("nacos.test.2", "default", [], demo_listener)
     time.sleep(1)
     print("unsubscribed!")
-
-    # deregister instance
-    naming.deregister_instance("nacos.test.2", "default", "11.11.11.11", 8888, "DEFAULT")
-    time.sleep(1)
-    print("deregister instance!")
-
-    # shutdown
-    # time.sleep(5)
-    # naming.shutdown()
-    # print("shutdown")
+    #
+    # # deregister instance
+    # naming.deregister_instance("nacos.test.2", "default", "11.11.11.11", 8888, "DEFAULT")
+    # time.sleep(1)
+    # print("deregister instance!")
+    #
+    # # shutdown
+    # # time.sleep(5)
+    # # naming.shutdown()
+    # # print("shutdown")
